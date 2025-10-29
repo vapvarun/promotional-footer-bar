@@ -1,0 +1,336 @@
+/**
+ * Promotional Footer Bar - Admin Styles
+ */
+
+.pfb-admin-wrap {
+	max-width: 1200px;
+}
+
+.pfb-admin-wrap h1 {
+	margin-bottom: 10px;
+}
+
+.pfb-admin-wrap .description {
+	font-size: 14px;
+	margin-bottom: 30px;
+	color: #646970;
+}
+
+/* Notifications Container */
+#pfb-notifications-container {
+	margin: 20px 0;
+}
+
+/* Individual Notification Row */
+.pfb-notification-row {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	margin-bottom: 20px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+	transition: opacity 0.3s ease;
+}
+
+.pfb-notification-row.pfb-removing {
+	opacity: 0.3;
+}
+
+/* Notification Header */
+.pfb-notification-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px 20px;
+	background: #f6f7f7;
+	border-bottom: 1px solid #c3c4c7;
+}
+
+.pfb-notification-toggle label {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+	cursor: pointer;
+}
+
+.pfb-enable-toggle {
+	margin: 0 !important;
+}
+
+.pfb-toggle-label {
+	font-weight: 600;
+	font-size: 14px;
+}
+
+.pfb-remove-notification {
+	color: #d63638;
+	text-decoration: none;
+	padding: 4px 8px;
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.pfb-remove-notification:hover {
+	color: #d63638;
+	background: rgba(214, 54, 56, 0.08);
+}
+
+.pfb-remove-notification .dashicons {
+	font-size: 16px;
+	width: 16px;
+	height: 16px;
+}
+
+/* Notification Content */
+.pfb-notification-content {
+	padding: 20px;
+}
+
+.pfb-notification-row[data-enabled="false"] .pfb-notification-content {
+	opacity: 0.5;
+}
+
+/* Form Table Customization */
+.pfb-notification-content .form-table {
+	margin-top: 0;
+}
+
+.pfb-notification-content .form-table th {
+	width: 180px;
+	padding-left: 0;
+}
+
+.pfb-notification-content .form-table td {
+	padding-right: 0;
+}
+
+.pfb-notification-content input[type="text"],
+.pfb-notification-content input[type="url"] {
+	width: 100%;
+}
+
+.pfb-notification-content .description {
+	margin-top: 5px;
+	color: #646970;
+	font-size: 13px;
+}
+
+/* Button Group */
+.pfb-button-group {
+	display: flex;
+	gap: 10px;
+	margin-bottom: 5px;
+}
+
+.pfb-button-group input {
+	flex: 1;
+}
+
+/* Color Group */
+.pfb-color-group {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 15px;
+	margin-bottom: 5px;
+}
+
+.pfb-color-field {
+	flex: 1;
+	min-width: 200px;
+}
+
+.pfb-color-field label {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	font-weight: 500;
+	font-size: 13px;
+	color: #1d2327;
+}
+
+/* Actions */
+.pfb-actions {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 30px;
+	padding: 20px 0;
+	border-top: 1px solid #c3c4c7;
+}
+
+#pfb-add-notification {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+}
+
+#pfb-add-notification .dashicons {
+	font-size: 18px;
+	width: 18px;
+	height: 18px;
+}
+
+.pfb-primary-actions {
+	display: flex;
+	gap: 10px;
+}
+
+/* Success Message */
+.notice.settings-error {
+	margin: 15px 0;
+}
+
+/* Empty State */
+.pfb-empty-state {
+	text-align: center;
+	padding: 60px 20px;
+	background: #f6f7f7;
+	border: 2px dashed #c3c4c7;
+	border-radius: 4px;
+	margin: 20px 0;
+}
+
+.pfb-empty-state .dashicons {
+	font-size: 48px;
+	width: 48px;
+	height: 48px;
+	color: #c3c4c7;
+	margin-bottom: 10px;
+}
+
+.pfb-empty-state h3 {
+	margin: 10px 0 5px;
+	color: #1d2327;
+}
+
+.pfb-empty-state p {
+	color: #646970;
+	margin: 0 0 20px;
+}
+
+/* Template Library */
+.pfb-template-library {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	padding: 20px;
+	margin: 20px 0 30px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.pfb-template-library h2 {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 10px;
+	font-size: 18px;
+}
+
+.pfb-template-library h2 .dashicons {
+	color: #2271b1;
+}
+
+.pfb-template-library > .description {
+	margin-bottom: 20px;
+}
+
+.pfb-template-categories {
+	margin-top: 20px;
+}
+
+.pfb-template-category {
+	margin-bottom: 30px;
+}
+
+.pfb-template-category:last-child {
+	margin-bottom: 0;
+}
+
+.pfb-template-category h3 {
+	font-size: 14px;
+	font-weight: 600;
+	color: #1d2327;
+	margin: 0 0 12px;
+	padding-bottom: 8px;
+	border-bottom: 2px solid #f0f0f1;
+}
+
+.pfb-template-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 15px;
+}
+
+.pfb-template-card {
+	background: #f9f9f9;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	padding: 15px;
+	transition: all 0.2s ease;
+}
+
+.pfb-template-card:hover {
+	border-color: #2271b1;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pfb-template-card h4 {
+	margin: 0 0 8px;
+	font-size: 14px;
+	font-weight: 600;
+	color: #1d2327;
+}
+
+.pfb-template-preview {
+	font-size: 13px;
+	color: #646970;
+	margin: 0 0 12px;
+	line-height: 1.5;
+	min-height: 40px;
+}
+
+.pfb-use-template {
+	width: 100%;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+}
+
+.pfb-use-template .dashicons {
+	font-size: 16px;
+	width: 16px;
+	height: 16px;
+}
+
+/* Responsive */
+@media (max-width: 782px) {
+	.pfb-notification-content .form-table th {
+		width: auto;
+		padding: 10px 0;
+	}
+
+	.pfb-button-group {
+		flex-direction: column;
+	}
+
+	.pfb-actions {
+		flex-direction: column;
+		gap: 15px;
+	}
+
+	.pfb-primary-actions {
+		width: 100%;
+	}
+
+	#pfb-add-notification,
+	.pfb-primary-actions .button {
+		width: 100%;
+		justify-content: center;
+	}
+
+	.pfb-template-grid {
+		grid-template-columns: 1fr;
+	}
+}
