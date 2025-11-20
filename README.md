@@ -1,21 +1,24 @@
 # Promotional Footer Bar
 
-**Version:** 1.0.0
+**Version:** 1.1.0
 **Author:** Wbcom Designs
-**License:** GPL-2.0+
+**License:** GPL-2.0-or-later
+**WordPress.org Ready:** Yes
 
 ## Description
 
-A simple, user-friendly WordPress plugin that displays random promotional notifications in a sticky footer bar. Perfect for promoting products, announcements, or special offers.
+A powerful, user-friendly WordPress plugin that displays random promotional notifications in a sticky top or bottom bar. Perfect for promoting products, announcements, or special offers with advanced targeting and scheduling.
 
 ## Features
 
-- ✅ **Template Library** - 10+ proven marketing templates to get started instantly
+- ✅ **Position Control** - Display at top or bottom of page (NEW in v1.1.0)
+- ✅ **Advanced Display Rules** - Show on specific page types, hide for logged-in users (NEW in v1.1.0)
+- ✅ **Template Library** - 14+ proven marketing templates across 5 categories
 - ✅ **Simple Interface** - No complex settings, just add your notifications
 - ✅ **Random Display** - Shows one random notification per page load
 - ✅ **Up to 10 Notifications** - Manage multiple notifications easily
 - ✅ **Enable/Disable** - Toggle notifications on/off without deleting
-- ✅ **Scheduling** - Set start and end dates for time-limited offers
+- ✅ **Smart Scheduling** - Set start and end dates for time-limited offers
 - ✅ **Dismissible** - Users can close notifications (reappear after 24 hours)
 - ✅ **Color Customization** - Match your brand with custom colors
 - ✅ **Mobile Responsive** - Different text for desktop and mobile
@@ -23,6 +26,7 @@ A simple, user-friendly WordPress plugin that displays random promotional notifi
 - ✅ **UTM Tracking** - Automatic UTM parameters for analytics
 - ✅ **High Performance** - Dual-layer caching, zero DB queries after first load
 - ✅ **No External Assets** - Minimal JavaScript (only for dismiss), inline CSS only
+- ✅ **WordPress.org Ready** - Proper readme.txt, GPL license, security hardened
 
 ## Installation
 
@@ -192,6 +196,16 @@ For support and feature requests, contact:
 - **Email**: admin@wbcomdesigns.com
 
 ## Changelog
+
+### 1.1.0 - 2025-11-21
+- **NEW:** Top/Bottom positioning option for each notification
+- **NEW:** Advanced display rules - show on specific page types (all pages, homepage, posts, pages)
+- **NEW:** Hide for logged-in users option
+- **NEW:** WordPress.org package - readme.txt with proper formatting
+- **IMPROVED:** Updated plugin headers with GPL-2.0-or-later license
+- **IMPROVED:** Better accessibility and security
+- **IMPROVED:** Enhanced documentation
+- **FIXED:** Minor CSS improvements for top positioning shadow
 
 ### 1.0.0 - 2025-10-30
 - Initial release

@@ -1,11 +1,15 @@
 <?php
 /**
  * Plugin Name: Promotional Footer Bar
- * Plugin URI: https://wbcomdesigns.com
- * Description: Display random promotional notifications in a sticky footer. Simple interface to manage 5-10 notifications with one showing at random on each page load.
- * Version: 1.0.0
- * Author: vapvarun
- * Author URI: https://vapvarun.in
+ * Plugin URI: https://wbcomdesigns.com/downloads/promotional-footer-bar/
+ * Description: Display random promotional notifications in a sticky top or bottom bar. Simple interface to manage up to 10 notifications with advanced display rules and scheduling.
+ * Version: 1.1.0
+ * Requires at least: 5.0
+ * Requires PHP: 7.0
+ * Author: Wbcom Designs
+ * Author URI: https://wbcomdesigns.com
+ * License: GPL-2.0-or-later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: promotional-footer-bar
  * Domain Path: /languages
  */
@@ -28,7 +32,7 @@ class Promotional_Footer_Bar {
 	/**
 	 * Plugin version
 	 */
-	const VERSION = '1.0.0';
+	const VERSION = '1.1.0';
 
 	/**
 	 * Cache group name
@@ -235,6 +239,39 @@ class Promotional_Footer_Bar {
 	}
 
 	/**
+	 * Filter notifications by display rules
+	 *
+	 * @param array $notifications Array of notifications to filter.
+	 * @return array Filtered notifications.
+	 */
+	private function filter_by_display_rules( $notifications ) {
+		return array_filter(
+			$notifications,
+			function( $notification ) {
+				// Check if hidden for logged-in users.
+				if ( ! empty( $notification['hide_for_logged_in'] ) && is_user_logged_in() ) {
+					return false;
+				}
+
+				// Check show_on rules.
+				$show_on = ! empty( $notification['show_on'] ) ? $notification['show_on'] : 'all';
+
+				switch ( $show_on ) {
+					case 'homepage':
+						return is_front_page();
+					case 'posts':
+						return is_single() && get_post_type() === 'post';
+					case 'pages':
+						return is_page();
+					case 'all':
+					default:
+						return true;
+				}
+			}
+		);
+	}
+
+	/**
 	 * Get default notification structure
 	 */
 	private function get_default_notification() {
@@ -249,6 +286,9 @@ class Promotional_Footer_Bar {
 			'start_date'         => '',
 			'end_date'           => '',
 			'dismissible'        => true,
+			'position'           => 'bottom',
+			'show_on'            => 'all',
+			'hide_for_logged_in' => false,
 			'bg_color'           => '#0f172a',
 			'text_color'         => '#ffffff',
 			'cta_bg_color'       => '#10b981',
@@ -701,6 +741,70 @@ class Promotional_Footer_Bar {
 
 					<tr>
 						<th scope="row">
+							<?php esc_html_e( 'Position', 'promotional-footer-bar' ); ?>
+						</th>
+						<td>
+							<label style="margin-right: 20px;">
+								<input type="radio"
+									name="notifications[<?php echo esc_attr( $index ); ?>][position]"
+									value="top"
+									<?php checked( ! empty( $notification['position'] ) ? $notification['position'] : 'bottom', 'top' ); ?>>
+								<?php esc_html_e( 'Top of page', 'promotional-footer-bar' ); ?>
+							</label>
+							<label>
+								<input type="radio"
+									name="notifications[<?php echo esc_attr( $index ); ?>][position]"
+									value="bottom"
+									<?php checked( ! empty( $notification['position'] ) ? $notification['position'] : 'bottom', 'bottom' ); ?>>
+								<?php esc_html_e( 'Bottom of page', 'promotional-footer-bar' ); ?>
+							</label>
+							<p class="description">
+								<?php esc_html_e( 'Choose where the notification bar appears on the page.', 'promotional-footer-bar' ); ?>
+							</p>
+						</td>
+					</tr>
+
+					<tr>
+						<th scope="row">
+							<?php esc_html_e( 'Display Rules', 'promotional-footer-bar' ); ?>
+						</th>
+						<td>
+							<div style="margin-bottom: 12px;">
+								<label for="pfb-show-on-<?php echo esc_attr( $index ); ?>" style="font-weight: 500; display: block; margin-bottom: 5px;">
+									<?php esc_html_e( 'Show On', 'promotional-footer-bar' ); ?>
+								</label>
+								<select id="pfb-show-on-<?php echo esc_attr( $index ); ?>" name="notifications[<?php echo esc_attr( $index ); ?>][show_on]" class="regular-text">
+									<option value="all" <?php selected( ! empty( $notification['show_on'] ) ? $notification['show_on'] : 'all', 'all' ); ?>>
+										<?php esc_html_e( 'All pages', 'promotional-footer-bar' ); ?>
+									</option>
+									<option value="homepage" <?php selected( ! empty( $notification['show_on'] ) ? $notification['show_on'] : 'all', 'homepage' ); ?>>
+										<?php esc_html_e( 'Homepage only', 'promotional-footer-bar' ); ?>
+									</option>
+									<option value="posts" <?php selected( ! empty( $notification['show_on'] ) ? $notification['show_on'] : 'all', 'posts' ); ?>>
+										<?php esc_html_e( 'Blog posts only', 'promotional-footer-bar' ); ?>
+									</option>
+									<option value="pages" <?php selected( ! empty( $notification['show_on'] ) ? $notification['show_on'] : 'all', 'pages' ); ?>>
+										<?php esc_html_e( 'Pages only', 'promotional-footer-bar' ); ?>
+									</option>
+								</select>
+							</div>
+							<div>
+								<label>
+									<input type="checkbox"
+										name="notifications[<?php echo esc_attr( $index ); ?>][hide_for_logged_in]"
+										value="1"
+										<?php checked( ! empty( $notification['hide_for_logged_in'] ) ); ?>>
+									<?php esc_html_e( 'Hide for logged-in users', 'promotional-footer-bar' ); ?>
+								</label>
+							</div>
+							<p class="description">
+								<?php esc_html_e( 'Control where and to whom this notification appears.', 'promotional-footer-bar' ); ?>
+							</p>
+						</td>
+					</tr>
+
+					<tr>
+						<th scope="row">
 							<?php esc_html_e( 'Options', 'promotional-footer-bar' ); ?>
 						</th>
 						<td>
@@ -808,6 +912,9 @@ class Promotional_Footer_Bar {
 					'start_date'         => sanitize_text_field( $notification['start_date'] ?? '' ),
 					'end_date'           => sanitize_text_field( $notification['end_date'] ?? '' ),
 					'dismissible'        => isset( $notification['dismissible'] ) ? true : false,
+					'position'           => in_array( $notification['position'] ?? 'bottom', array( 'top', 'bottom' ), true ) ? $notification['position'] : 'bottom',
+					'show_on'            => in_array( $notification['show_on'] ?? 'all', array( 'all', 'homepage', 'posts', 'pages' ), true ) ? $notification['show_on'] : 'all',
+					'hide_for_logged_in' => isset( $notification['hide_for_logged_in'] ) ? true : false,
 					'bg_color'           => $this->sanitize_hex_color( $notification['bg_color'] ?? '', '#0f172a' ),
 					'text_color'         => $this->sanitize_hex_color( $notification['text_color'] ?? '', '#ffffff' ),
 					'cta_bg_color'       => $this->sanitize_hex_color( $notification['cta_bg_color'] ?? '', '#10b981' ),
@@ -854,6 +961,13 @@ class Promotional_Footer_Bar {
 			return;
 		}
 
+		// Filter notifications based on display rules.
+		$enabled_notifications = $this->filter_by_display_rules( $enabled_notifications );
+
+		if ( empty( $enabled_notifications ) ) {
+			return;
+		}
+
 		// Allow filtering which pages show notifications (for performance).
 		if ( ! apply_filters( 'pfb_show_notification', true ) ) {
 			return;
@@ -868,12 +982,13 @@ class Promotional_Footer_Bar {
 			return;
 		}
 
-		// Get colors.
+		// Get colors and position.
 		$bg_color         = ! empty( $notification['bg_color'] ) ? $notification['bg_color'] : '#0f172a';
 		$text_color       = ! empty( $notification['text_color'] ) ? $notification['text_color'] : '#ffffff';
 		$cta_bg_color     = ! empty( $notification['cta_bg_color'] ) ? $notification['cta_bg_color'] : '#10b981';
 		$secondary_bg     = ! empty( $notification['secondary_bg_color'] ) ? $notification['secondary_bg_color'] : '#1f2937';
 		$is_dismissible   = ! empty( $notification['dismissible'] );
+		$position         = ! empty( $notification['position'] ) ? $notification['position'] : 'bottom';
 
 		// Add UTM parameters to URLs.
 		$cta_url       = $this->add_utm_params( $notification['cta_url'] );
@@ -926,7 +1041,7 @@ class Promotional_Footer_Bar {
 
 		<style>
 			#pfb-sticky-footer {
-				position: fixed; bottom: 0; left: 0; right: 0;
+				position: fixed; <?php echo ( 'top' === $position ) ? 'top: 0;' : 'bottom: 0;'; ?> left: 0; right: 0;
 				background: <?php echo esc_attr( $bg_color ); ?>;
 				color: <?php echo esc_attr( $text_color ); ?>;
 				padding: .7rem 1rem;
@@ -935,7 +1050,7 @@ class Promotional_Footer_Bar {
 				display: flex; flex-wrap: wrap;
 				justify-content: center; align-items: center; gap: .75rem 1rem;
 				text-align: center;
-				box-shadow: 0 -2px 8px rgba(0,0,0,.15);
+				box-shadow: <?php echo ( 'top' === $position ) ? '0 2px 8px rgba(0,0,0,.15)' : '0 -2px 8px rgba(0,0,0,.15)'; ?>;
 			}
 			.pfb-promo-text { margin: 0; }
 			.pfb-desktop-text { display: inline; }
