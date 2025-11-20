@@ -99,7 +99,7 @@ class Promotional_Footer_Bar {
 	 * Add admin menu page
 	 */
 	public function add_admin_menu() {
-		add_menu_page(
+		$hook = add_menu_page(
 			__( 'Footer Notifications', 'promotional-footer-bar' ),
 			__( 'Footer Notices', 'promotional-footer-bar' ),
 			'manage_options',
@@ -107,6 +107,65 @@ class Promotional_Footer_Bar {
 			array( $this, 'admin_page' ),
 			'dashicons-megaphone',
 			80
+		);
+
+		// Add help tab and screen options
+		add_action( "load-{$hook}", array( $this, 'add_help_tab' ) );
+		add_action( "load-{$hook}", array( $this, 'add_screen_options' ) );
+	}
+
+	/**
+	 * Add help tab to admin page
+	 */
+	public function add_help_tab() {
+		$screen = get_current_screen();
+
+		$screen->add_help_tab(
+			array(
+				'id'      => 'pfb-overview',
+				'title'   => __( 'Overview', 'promotional-footer-bar' ),
+				'content' => '<p>' . __( '<strong>Promotional Footer Bar</strong> helps you display random promotional notifications to your visitors.', 'promotional-footer-bar' ) . '</p>' .
+							'<p>' . __( 'You can create up to 10 notifications and one will be randomly selected on each page load.', 'promotional-footer-bar' ) . '</p>',
+			)
+		);
+
+		$screen->add_help_tab(
+			array(
+				'id'      => 'pfb-templates',
+				'title'   => __( 'Using Templates', 'promotional-footer-bar' ),
+				'content' => '<p>' . __( '<strong>Template Library:</strong> Click "Use Template" on any template to instantly populate a new notification with proven marketing copy.', 'promotional-footer-bar' ) . '</p>' .
+							'<p>' . __( 'Templates are organized by category: Products, Freebies, Events, Offers, and Community.', 'promotional-footer-bar' ) . '</p>',
+			)
+		);
+
+		$screen->add_help_tab(
+			array(
+				'id'      => 'pfb-settings',
+				'title'   => __( 'Notification Settings', 'promotional-footer-bar' ),
+				'content' => '<p>' . __( '<strong>Position:</strong> Choose top or bottom of page.', 'promotional-footer-bar' ) . '</p>' .
+							'<p>' . __( '<strong>Display Rules:</strong> Control where notifications appear (all pages, homepage, posts, pages) and hide for logged-in users.', 'promotional-footer-bar' ) . '</p>' .
+							'<p>' . __( '<strong>Scheduling:</strong> Set start and end dates for time-limited offers.', 'promotional-footer-bar' ) . '</p>' .
+							'<p>' . __( '<strong>Colors:</strong> Customize background, text, and button colors to match your brand.', 'promotional-footer-bar' ) . '</p>',
+			)
+		);
+
+		$screen->set_help_sidebar(
+			'<p><strong>' . __( 'For more information:', 'promotional-footer-bar' ) . '</strong></p>' .
+			'<p><a href="https://docs.wbcomdesigns.com" target="_blank">' . __( 'Documentation', 'promotional-footer-bar' ) . '</a></p>' .
+			'<p><a href="https://wbcomdesigns.com/support/" target="_blank">' . __( 'Support', 'promotional-footer-bar' ) . '</a></p>'
+		);
+	}
+
+	/**
+	 * Add screen options
+	 */
+	public function add_screen_options() {
+		add_screen_option(
+			'layout_columns',
+			array(
+				'max'     => 1,
+				'default' => 1,
+			)
 		);
 	}
 
@@ -519,9 +578,25 @@ class Promotional_Footer_Bar {
 	public function admin_page() {
 		$notifications = $this->get_notifications();
 		$templates     = $this->get_notification_templates();
+
+		// Show admin notices
+		if ( isset( $_GET['updated'] ) && 'true' === $_GET['updated'] ) {
+			add_settings_error(
+				'pfb_messages',
+				'pfb_message',
+				__( 'Notifications saved successfully!', 'promotional-footer-bar' ),
+				'updated'
+			);
+		}
 		?>
 		<div class="wrap pfb-admin-wrap">
-			<h1><?php esc_html_e( 'Footer Notifications', 'promotional-footer-bar' ); ?></h1>
+			<h1>
+				<?php esc_html_e( 'Footer Notifications', 'promotional-footer-bar' ); ?>
+				<a href="#" class="page-title-action pfb-add-new-top"><?php esc_html_e( 'Add New', 'promotional-footer-bar' ); ?></a>
+			</h1>
+
+			<?php settings_errors( 'pfb_messages' ); ?>
+
 			<p class="description">
 				<?php esc_html_e( 'Add up to 10 notifications. One will be randomly selected and displayed in the sticky footer on each page load.', 'promotional-footer-bar' ); ?>
 			</p>

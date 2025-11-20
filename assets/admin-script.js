@@ -19,8 +19,8 @@
 		// Initialize color pickers
 		initColorPickers();
 
-		// Add notification button
-		$('#pfb-add-notification').on('click', addNotification);
+		// Add notification buttons
+		$('#pfb-add-notification, .pfb-add-new-top').on('click', addNotification);
 
 		// Remove notification buttons (delegated)
 		$(document).on('click', '.pfb-remove-notification', removeNotification);
@@ -30,11 +30,6 @@
 
 		// Template buttons
 		$(document).on('click', '.pfb-use-template', useTemplate);
-
-		// Show success message if redirected after save
-		if (window.location.search.indexOf('updated=true') !== -1) {
-			showSuccessMessage();
-		}
 
 		// Disable add button if max reached
 		checkMaxNotifications();
@@ -213,28 +208,6 @@
 		}
 	}
 
-	function showSuccessMessage() {
-		var $message = $(
-			'<div class="notice notice-success is-dismissible">' +
-				'<p><strong>Notifications saved successfully!</strong></p>' +
-			'</div>'
-		);
-
-		$('.pfb-admin-wrap h1').after($message);
-
-		// Auto-dismiss after 3 seconds
-		setTimeout(function() {
-			$message.fadeOut(function() {
-				$(this).remove();
-			});
-		}, 3000);
-
-		// Remove 'updated' parameter from URL
-		if (window.history.replaceState) {
-			var cleanUrl = window.location.href.split('?')[0] + '?page=footer-notifications';
-			window.history.replaceState({}, document.title, cleanUrl);
-		}
-	}
 
 	// Form validation before submit
 	$('#pfb-notifications-form').on('submit', function(e) {
