@@ -1,18 +1,20 @@
 # Promotional Footer Bar
 
-**Version:** 1.1.0
+**Version:** 1.2.0
 **Author:** Wbcom Designs
 **License:** GPL-2.0-or-later
 **WordPress.org Ready:** Yes
 
 ## Description
 
-A powerful, user-friendly WordPress plugin that displays random promotional notifications in a sticky top or bottom bar. Perfect for promoting products, announcements, or special offers with advanced targeting and scheduling.
+A powerful, user-friendly WordPress plugin that displays random promotional notifications in a sticky top or bottom bar, plus inject custom header/footer tracking codes. Perfect for promoting products, announcements, or special offers with advanced targeting and scheduling, along with Google Analytics, Facebook Pixel, and other tracking scripts.
 
 ## Features
 
-- ✅ **Position Control** - Display at top or bottom of page (NEW in v1.1.0)
-- ✅ **Advanced Display Rules** - Show on specific page types, hide for logged-in users (NEW in v1.1.0)
+### Promotional Notifications
+
+- ✅ **Position Control** - Display at top or bottom of page
+- ✅ **Advanced Display Rules** - Show on specific page types, hide for logged-in users
 - ✅ **Template Library** - 14+ proven marketing templates across 5 categories
 - ✅ **Simple Interface** - No complex settings, just add your notifications
 - ✅ **Random Display** - Shows one random notification per page load
@@ -24,8 +26,28 @@ A powerful, user-friendly WordPress plugin that displays random promotional noti
 - ✅ **Mobile Responsive** - Different text for desktop and mobile
 - ✅ **Dual CTAs** - Primary button + optional secondary link
 - ✅ **UTM Tracking** - Automatic UTM parameters for analytics
+
+### Scripts & Tracking (NEW in v1.2.0)
+
+- ✅ **Header Code Injection** - Add tracking codes to `<head>` via wp_head
+- ✅ **Footer Code Injection** - Add tracking codes before `</body>` via wp_footer
+- ✅ **Code Editor** - Syntax highlighting with WordPress CodeMirror
+- ✅ **Independent Controls** - Enable/disable header and footer code separately
+- ✅ **Priority Control** - Choose when footer code runs (before/after notifications)
+- ✅ **Security Features** - Requires `unfiltered_html` capability, code sanitization
+- ✅ **Perfect For**:
+  - Google Analytics & Google Tag Manager
+  - Facebook Pixel tracking
+  - Meta & Google Search Console verification
+  - Custom CSS styles
+  - Third-party chat widgets
+  - Any custom HTML/JavaScript/CSS
+
+### Performance & Architecture
+
 - ✅ **High Performance** - Dual-layer caching, zero DB queries after first load
-- ✅ **No External Assets** - Minimal JavaScript (only for dismiss), inline CSS only
+- ✅ **Modular Design** - Clean separation of features (v1.2.0)
+- ✅ **No External Assets** - Minimal JavaScript, inline CSS only
 - ✅ **WordPress.org Ready** - Proper readme.txt, GPL license, security hardened
 
 ## Installation
@@ -120,6 +142,59 @@ Match your brand with custom colors:
 - Uses WordPress color picker for easy selection
 - Defaults match the original design
 
+### Using Scripts & Tracking (NEW in v1.2.0)
+
+Add custom tracking codes and scripts to your site:
+
+1. Go to **Footer Notices → Scripts & Tracking** in WordPress admin
+2. **Header Code Section**:
+   - Enable header code injection
+   - Paste your code (Google Analytics, verification tags, etc.)
+   - Code appears in `<head>` section via `wp_head` hook
+3. **Footer Code Section**:
+   - Enable footer code injection
+   - Paste your code (Facebook Pixel, chat widgets, etc.)
+   - Choose priority: before notifications (5) or after (15 - recommended)
+   - Code appears before `</body>` via `wp_footer` hook
+4. Click **Save Scripts Settings**
+
+**Common Use Cases:**
+
+```html
+<!-- Google Analytics (Header or Footer) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_MEASUREMENT_ID');
+</script>
+
+<!-- Meta Verification (Header) -->
+<meta name="facebook-domain-verification" content="your-verification-code" />
+<meta name="google-site-verification" content="your-verification-code" />
+
+<!-- Facebook Pixel (Footer) -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', 'YOUR_PIXEL_ID');
+  fbq('track', 'PageView');
+</script>
+```
+
+**Security Notes:**
+- Requires administrator account with `unfiltered_html` capability
+- Code is sanitized for non-admins
+- Only add code from trusted sources
+- Test on staging site first
+
 ## Configuration
 
 ### Customization
@@ -174,13 +249,28 @@ FREE Product Roadmap Plugin — Must-have for planning!
 - **Autoload disabled** - No performance impact on page loads
 - **Minimal frontend footprint** - Inline CSS, ~1KB JavaScript (only when dismissible)
 - **Cache duration** - 24 hours (transient) + request-level (object cache)
+- **Modular architecture** - Separate class files for maintainability
+
+### Architecture (v1.2.0)
+```
+/promotional-footer-bar/
+├── promotional-footer-bar.php (1,264 lines - Notifications)
+├── includes/
+│   └── class-scripts-tracking.php (517 lines - Scripts & Tracking)
+├── assets/
+│   ├── admin-script.js
+│   ├── admin-style.css
+│   └── dismiss.js
+└── uninstall.php
+```
 
 ### Security
-- ✅ Proper nonce verification
+- ✅ Proper nonce verification for all forms
 - ✅ All inputs sanitized (`sanitize_text_field`, `esc_url_raw`, custom hex color validation)
 - ✅ All outputs escaped (`esc_html`, `esc_attr`, `esc_url`)
-- ✅ Capability checks (`manage_options`)
-- ✅ Direct access protection
+- ✅ Capability checks (`manage_options`, `unfiltered_html` for scripts)
+- ✅ Direct access protection on all files
+- ✅ Scripts feature requires administrator with `unfiltered_html` capability
 
 ### Compatibility
 - **PHP:** 7.0+
@@ -196,6 +286,23 @@ For support and feature requests, contact:
 - **Email**: admin@wbcomdesigns.com
 
 ## Changelog
+
+### 1.2.0 - 2025-11-24
+- **NEW:** Scripts & Tracking feature - Inject custom header and footer code
+- **NEW:** Header code injection via `wp_head` hook (priority 10)
+- **NEW:** Footer code injection via `wp_footer` hook (priority 15)
+- **NEW:** WordPress CodeMirror code editor with syntax highlighting
+- **NEW:** Independent enable/disable controls for header and footer code
+- **NEW:** Footer priority selection (before/after notifications)
+- **NEW:** Security - Requires `unfiltered_html` capability for unrestricted code
+- **NEW:** Modular architecture - Scripts feature in separate class file
+- **NEW:** Help tabs for Scripts & Tracking with common use cases
+- **IMPROVED:** Code organization - Main plugin file reduced from 1,700+ to 1,264 lines
+- **IMPROVED:** Separated Scripts & Tracking into `/includes/class-scripts-tracking.php` (517 lines)
+- **IMPROVED:** Caching system for scripts settings (1-hour object cache)
+- **IMPROVED:** Admin menu structure with submenu organization
+- **IMPROVED:** Uninstall cleanup includes scripts settings
+- **IMPROVED:** Better file structure for future scalability
 
 ### 1.1.0 - 2025-11-21
 - **NEW:** Top/Bottom positioning option for each notification

@@ -4,17 +4,19 @@ Tags: notification bar, promotional bar, announcement, sticky bar, marketing
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Display random promotional notifications in a sticky top or bottom bar with advanced scheduling and display rules.
+Display promotional notifications in a sticky bar + inject custom header/footer tracking codes with advanced scheduling and display rules.
 
 == Description ==
 
 **Promotional Footer Bar** is a powerful yet simple WordPress plugin that helps you display promotional notifications, announcements, or special offers in a sticky notification bar. Perfect for promoting products, announcements, events, or any important messages to your visitors.
 
 ### Key Features
+
+#### Promotional Notifications
 
 * **Top or Bottom Positioning** - Choose to display your notification bar at the top or bottom of the page
 * **Template Library** - 14+ proven marketing templates across 5 categories to get started instantly
@@ -29,8 +31,28 @@ Display random promotional notifications in a sticky top or bottom bar with adva
 * **Dismissible Notifications** - Users can close notifications (reappear after 24 hours)
 * **Dual CTAs** - Primary button + optional secondary link
 * **UTM Tracking** - Automatic UTM parameters for analytics
+
+#### Scripts & Tracking (NEW in 1.2.0)
+
+* **Header Code Injection** - Add custom code to wp_head for tracking, verification, and analytics
+* **Footer Code Injection** - Add custom code to wp_footer for performance-optimized tracking
+* **Code Editor** - Syntax highlighting with WordPress CodeMirror integration
+* **Enable/Disable Controls** - Toggle header and footer code independently
+* **Priority Control** - Choose whether footer code runs before or after notifications
+* **Security Features** - Requires `unfiltered_html` capability, code sanitization
+* **Common Use Cases**:
+  * Google Analytics & Tag Manager
+  * Facebook Pixel tracking
+  * Meta verification tags
+  * Google Search Console verification
+  * Custom CSS styles
+  * Third-party chat widgets
+
+#### Performance & Security
+
 * **High Performance** - Dual-layer caching, zero DB queries after first load
 * **Security First** - Proper sanitization, escaping, and nonce verification
+* **Modular Architecture** - Clean code separation for easy maintenance
 
 ### Perfect For
 
@@ -51,12 +73,22 @@ Display random promotional notifications in a sticky top or bottom bar with adva
 
 ### Easy to Use
 
+#### Setting Up Notifications
+
 1. Install and activate the plugin
-2. Go to **Footer Notices** in WordPress admin
+2. Go to **Footer Notices → Notifications** in WordPress admin
 3. Choose a template or create your own notification
 4. Customize colors, text, and buttons
 5. Set display rules and scheduling
 6. Save and watch it appear on your site!
+
+#### Adding Tracking Codes (NEW in 1.2.0)
+
+1. Go to **Footer Notices → Scripts & Tracking** in WordPress admin
+2. Enable header code and/or footer code
+3. Paste your tracking scripts (Google Analytics, Facebook Pixel, etc.)
+4. Choose footer code priority if needed
+5. Save and your codes are live!
 
 ### Performance Optimized
 
@@ -154,6 +186,30 @@ Yes! The plugin is fully responsive and includes separate text options for mobil
 
 No! The plugin uses dual-layer caching and has minimal frontend footprint. Zero database queries after the first page load.
 
+= What is Scripts & Tracking? (NEW in 1.2.0) =
+
+Scripts & Tracking allows you to inject custom HTML, JavaScript, or CSS code into your site's header (wp_head) or footer (wp_footer). This is perfect for adding:
+* Google Analytics or Google Tag Manager
+* Facebook Pixel tracking
+* Meta/Google verification tags
+* Custom CSS styles
+* Chat widgets and other third-party scripts
+
+= Is the Scripts & Tracking feature secure? =
+
+Yes! The feature requires administrator-level permissions with the `unfiltered_html` capability. Code is sanitized based on user permissions, and only trusted users can save unrestricted code.
+
+= Can I add Google Analytics with this plugin? =
+
+Yes! Go to Footer Notices → Scripts & Tracking, enable header code or footer code, paste your Google Analytics tracking code, and save. It will appear on all frontend pages.
+
+= Where should I add my tracking codes - header or footer? =
+
+* **Header** - For verification tags, critical CSS, or scripts that must load early
+* **Footer** - For analytics (Google Analytics, Facebook Pixel), chat widgets, or non-critical scripts (better for performance)
+
+Most tracking scripts work best in the footer for optimal page load speed.
+
 == Screenshots ==
 
 1. Admin interface with template library
@@ -164,6 +220,22 @@ No! The plugin uses dual-layer caching and has minimal frontend footprint. Zero 
 6. Mobile responsive view
 
 == Changelog ==
+
+= 1.2.0 - 2025-11-24 =
+* **NEW:** Scripts & Tracking feature - Inject custom header and footer code
+* **NEW:** Header code injection via wp_head hook (priority 10)
+* **NEW:** Footer code injection via wp_footer hook (priority 15)
+* **NEW:** WordPress CodeMirror code editor with syntax highlighting
+* **NEW:** Independent enable/disable controls for header and footer code
+* **NEW:** Footer priority selection (before/after notifications)
+* **NEW:** Security - Requires `unfiltered_html` capability for unrestricted code
+* **NEW:** Modular architecture - Scripts feature in separate class file
+* **IMPROVED:** Code organization - Main plugin file reduced from 1,700+ to 1,264 lines
+* **IMPROVED:** Separated Scripts & Tracking into `/includes/class-scripts-tracking.php`
+* **IMPROVED:** Caching system for scripts settings (1-hour object cache)
+* **IMPROVED:** Admin menu structure with submenu organization
+* **IMPROVED:** Help tabs for Scripts & Tracking with common use cases
+* **IMPROVED:** Uninstall cleanup includes scripts settings
 
 = 1.1.0 - 2025-11-21 =
 * **NEW:** Top/Bottom positioning option for each notification
@@ -190,6 +262,9 @@ No! The plugin uses dual-layer caching and has minimal frontend footprint. Zero 
 * Translation ready
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+Major feature update! Adds Scripts & Tracking for custom header/footer code injection. Perfect for Google Analytics, Facebook Pixel, verification tags, and more. Modular architecture for better maintainability.
 
 = 1.1.0 =
 Major update! Adds top/bottom positioning, advanced display rules, and hide for logged-in users. Includes WordPress.org packaging.

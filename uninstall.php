@@ -14,6 +14,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 // Remove plugin options.
 delete_option( 'pfb_notifications' );
+delete_option( 'pfb_scripts_settings' );
 
 // Remove transient cache.
 delete_transient( 'pfb_enabled_notifications' );
@@ -30,6 +31,7 @@ if ( is_multisite() ) {
 
 		// Remove options for this site.
 		delete_option( 'pfb_notifications' );
+		delete_option( 'pfb_scripts_settings' );
 		delete_transient( 'pfb_enabled_notifications' );
 
 		restore_current_blog();

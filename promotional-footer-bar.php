@@ -3,7 +3,7 @@
  * Plugin Name: Promotional Footer Bar
  * Plugin URI: https://wbcomdesigns.com/downloads/promotional-footer-bar/
  * Description: Display random promotional notifications in a sticky top or bottom bar. Simple interface to manage up to 10 notifications with advanced display rules and scheduling.
- * Version: 1.1.0
+ * Version: 1.2.0
  * Requires at least: 5.0
  * Requires PHP: 7.0
  * Author: Wbcom Designs
@@ -32,7 +32,7 @@ class Promotional_Footer_Bar {
 	/**
 	 * Plugin version
 	 */
-	const VERSION = '1.1.0';
+	const VERSION = '1.2.0';
 
 	/**
 	 * Cache group name
@@ -107,6 +107,16 @@ class Promotional_Footer_Bar {
 			array( $this, 'admin_page' ),
 			'dashicons-megaphone',
 			80
+		);
+
+		// Rename first submenu item
+		add_submenu_page(
+			'footer-notifications',
+			__( 'Notifications', 'promotional-footer-bar' ),
+			__( 'Notifications', 'promotional-footer-bar' ),
+			'manage_options',
+			'footer-notifications',
+			array( $this, 'admin_page' )
 		);
 
 		// Add help tab and screen options
@@ -1244,5 +1254,11 @@ class Promotional_Footer_Bar {
 	}
 }
 
+// Load Scripts & Tracking feature
+require_once plugin_dir_path( __FILE__ ) . 'includes/class-scripts-tracking.php';
+
 // Initialize the plugin
 new Promotional_Footer_Bar();
+
+// Initialize Scripts & Tracking
+new PFB_Scripts_Tracking( Promotional_Footer_Bar::VERSION );
